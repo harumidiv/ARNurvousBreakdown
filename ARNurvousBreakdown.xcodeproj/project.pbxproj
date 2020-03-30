@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		49A4EEEE24322F6900A16CB6 /* Model in Resources */ = {isa = PBXBuildFile; fileRef = 49A4EEED24322F6900A16CB6 /* Model */; };
 		49C476D72430DB2E00C8C21E /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C476D52430DB2E00C8C21E /* GameViewController.swift */; };
 		49C476D82430DB2E00C8C21E /* GameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49C476D62430DB2E00C8C21E /* GameViewController.xib */; };
 		49CDA5F92430D9F70042DAE0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CDA5F82430D9F70042DAE0 /* AppDelegate.swift */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		49A4EEED24322F6900A16CB6 /* Model */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Model; sourceTree = "<group>"; };
 		49C476D52430DB2E00C8C21E /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		49C476D62430DB2E00C8C21E /* GameViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameViewController.xib; sourceTree = "<group>"; };
 		49CDA5F52430D9F70042DAE0 /* ARNurvousBreakdown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARNurvousBreakdown.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -78,6 +80,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		49A4EEEC24322F3F00A16CB6 /* GameScreen */ = {
+			isa = PBXGroup;
+			children = (
+				49C476D52430DB2E00C8C21E /* GameViewController.swift */,
+				49C476D62430DB2E00C8C21E /* GameViewController.xib */,
+			);
+			path = GameScreen;
+			sourceTree = "<group>";
+		};
 		49CDA5EC2430D9F60042DAE0 = {
 			isa = PBXGroup;
 			children = (
@@ -103,10 +114,10 @@
 			children = (
 				49CDA5F82430D9F70042DAE0 /* AppDelegate.swift */,
 				49CDA5FA2430D9F70042DAE0 /* SceneDelegate.swift */,
-				49C476D52430DB2E00C8C21E /* GameViewController.swift */,
-				49C476D62430DB2E00C8C21E /* GameViewController.xib */,
-				49CDA5FE2430D9F70042DAE0 /* Main.storyboard */,
+				49A4EEEC24322F3F00A16CB6 /* GameScreen */,
 				49CDA6012430D9FB0042DAE0 /* Assets.xcassets */,
+				49A4EEED24322F6900A16CB6 /* Model */,
+				49CDA5FE2430D9F70042DAE0 /* Main.storyboard */,
 				49CDA6032430D9FB0042DAE0 /* LaunchScreen.storyboard */,
 				49CDA6062430D9FB0042DAE0 /* Info.plist */,
 			);
@@ -235,6 +246,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49A4EEEE24322F6900A16CB6 /* Model in Resources */,
 				49C476D82430DB2E00C8C21E /* GameViewController.xib in Resources */,
 				49CDA6052430D9FB0042DAE0 /* LaunchScreen.storyboard in Resources */,
 				49CDA6022430D9FB0042DAE0 /* Assets.xcassets in Resources */,
