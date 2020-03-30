@@ -8,6 +8,7 @@
 
 import UIKit
 import RealityKit
+import Combine
 
 class GameViewController: UIViewController {
 
@@ -37,6 +38,44 @@ class GameViewController: UIViewController {
             anchor.addChild(card)
             
         }
+        //裏になっている時にオブジェクトを隠す
+        let boxSize: Float = 0.7
+        let occlusionBoxMesh = MeshResource.generateBox(size: boxSize)
+        let occlusionBox = ModelEntity(mesh: occlusionBoxMesh, materials: [OcclusionMaterial()])
+        occlusionBox.position.y = -boxSize/2
+        anchor.addChild(occlusionBox)
+        
+        var cancellable: AnyCancellable? = nil
+        
+        
+        cancellable = ModelEntity.loadModelAsync(named: "Model/chair_swan")
+            .append(ModelEntity.loadModelAsync(named: "Model/cup_saucer_set"))
+            .collect()
+            .sink(receiveCompletion: { error in
+               print("error:\(error)")
+                cancellable?.cancel()
+            }, receiveValue: { entities in
+                var objects: [ModelEntity] = []
+                for entity in entities {
+                    entity.setScale(SIMD3<Float>(0.002, 0.002, 0.002),relativeTo: anchor)
+                    entity.generateCollisionShapes(recursive: true)
+                    for _ in 1...2 {
+                        objects.append(entity.clone(recursive: true))
+                        
+                    }
+                }
+                objects.shuffle()
+                
+                //カードにARオブジェクトを追加する
+                for (index, object) in objects.enumerated() {
+                    cards[index].addChild(object)
+                    cards[index].transform.rotation = simd_quatf(angle: .pi, axis: [1, 0, 0])
+                    
+                }
+                
+                cancellable?.cancel()
+        })
+        
     }
     
     @IBAction func onTap(_ sender: UITapGestureRecognizer) {
