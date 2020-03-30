@@ -20,6 +20,10 @@
             <subviews>
                 <arView multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fwu-14-WM6">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <gestureRecognizers/>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="XKI-Pr-4XN" appends="YES" id="IQh-AC-l0Z"/>
+                    </connections>
                 </arView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -32,5 +36,10 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="139" y="100"/>
         </view>
+        <tapGestureRecognizer id="XKI-Pr-4XN">
+            <connections>
+                <action selector="onTap:" destination="-1" id="50K-Lm-nbo"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
 </document>

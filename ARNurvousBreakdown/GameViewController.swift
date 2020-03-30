@@ -38,4 +38,21 @@ class GameViewController: UIViewController {
             
         }
     }
+    
+    @IBAction func onTap(_ sender: UITapGestureRecognizer) {
+        let tapLogation = sender.location(in: arView)
+        if let card = arView.entity(at: tapLogation) {
+            if card.transform.rotation.angle == .pi {
+                var flipDownTransform = card.transform
+                flipDownTransform.rotation = simd_quatf(angle: 0, axis: [1, 0, 0])
+                card.move(to: flipDownTransform, relativeTo: card.parent, duration: 0.25, timingFunction: .easeOut)
+            } else {
+                var flipUpTransform = card.transform
+                flipUpTransform.rotation = simd_quatf(angle: .pi, axis: [1, 0, 0])
+                card.move(to: flipUpTransform, relativeTo: card.parent, duration: 0.25, timingFunction: .easeOut)
+            }
+        }
+        
+        
+    }
 }
