@@ -13,16 +13,17 @@ import Combine
 class GameViewController: UIViewController {
 
     @IBOutlet weak var arView: ARView!
+    private var cards:[Entity]  = []
+    private let cardConstantNum = 16
+    private let anchor:AnchorEntity = AnchorEntity(plane: .horizontal,minimumBounds: [0.2, 0.2])
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let anchor:AnchorEntity = AnchorEntity(plane: .horizontal,
-                                               minimumBounds: [0.2, 0.2])
         arView.scene.addAnchor(anchor)
         
-        var cards:[Entity]  = []
-        for _ in 1...4 {
+        for _ in 1...cardConstantNum {
             let box = MeshResource.generateBox(width: 0.04, height: 0.002, depth: 0.04)
             let metalMaterial = SimpleMaterial(color: .gray, isMetallic: true)
             let model = ModelEntity(mesh: box, materials: [metalMaterial])
@@ -32,12 +33,12 @@ class GameViewController: UIViewController {
         }
         
         for (index, card) in cards.enumerated() {
-            let x = Float(index % 2)
-            let z = Float(index / 2)
+            let x = Float(index % 4)
+            let z = Float(index / 4)
             card.position = [x * 0.1, 0, z * 0.1]
             anchor.addChild(card)
-            
         }
+        
         //裏になっている時にオブジェクトを隠す
         let boxSize: Float = 0.7
         let occlusionBoxMesh = MeshResource.generateBox(size: boxSize)
@@ -47,7 +48,7 @@ class GameViewController: UIViewController {
         
         var cancellable: AnyCancellable? = nil
         
-        
+        //TODO: モデルのサイズがバラバラになってしまっているので統一する
         cancellable = ModelEntity.loadModelAsync(named: "Model/chair_swan")
             .append(ModelEntity.loadModelAsync(named: "Model/cup_saucer_set"))
             .collect()
@@ -57,7 +58,7 @@ class GameViewController: UIViewController {
             }, receiveValue: { entities in
                 var objects: [ModelEntity] = []
                 for entity in entities {
-                    entity.setScale(SIMD3<Float>(0.002, 0.002, 0.002),relativeTo: anchor)
+                    entity.setScale(SIMD3<Float>(0.002, 0.002, 0.002),relativeTo: self.anchor)
                     entity.generateCollisionShapes(recursive: true)
                     for _ in 1...2 {
                         objects.append(entity.clone(recursive: true))
@@ -68,9 +69,8 @@ class GameViewController: UIViewController {
                 
                 //カードにARオブジェクトを追加する
                 for (index, object) in objects.enumerated() {
-                    cards[index].addChild(object)
-                    cards[index].transform.rotation = simd_quatf(angle: .pi, axis: [1, 0, 0])
-                    
+                    self.cards[index].addChild(object)
+                    self.cards[index].transform.rotation = simd_quatf(angle: .pi, axis: [1, 0, 0])
                 }
                 
                 cancellable?.cancel()
@@ -78,6 +78,7 @@ class GameViewController: UIViewController {
         
     }
     
+    // MARK: Event
     @IBAction func onTap(_ sender: UITapGestureRecognizer) {
         let tapLogation = sender.location(in: arView)
         if let card = arView.entity(at: tapLogation) {
